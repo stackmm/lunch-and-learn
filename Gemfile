@@ -44,13 +44,16 @@ group :development, :test do
   gem "faker"
   gem "factory_bot_rails"
   gem "rspec-rails"
+end
+
+group :test do
   gem "capybara"
   gem "launchy"
   gem "orderly"
   gem "shoulda-matchers"
   gem "simplecov"
-  gem "webmock"
   gem "vcr"
+  gem "webmock"
 end
 
 group :development do
