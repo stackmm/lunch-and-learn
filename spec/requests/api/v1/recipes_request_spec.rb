@@ -27,18 +27,18 @@ RSpec.describe "Find Recipes by Country API", type: :request do
         end
       end
 
-      xit "can find recipes for a random country via REST Countries API" do
-        get "/api/v1/recipes?country="
+      it "can find recipes for a random country via REST Countries API" do
+        get "/api/v1/recipes"
 
         expect(response).to be_successful
         expect(response.status).to eq(200)
-        expect(response.content_type).to eq("application/json")
+        expect(response.content_type).to eq("application/json; charset=utf-8")
 
         recipes = JSON.parse(response.body, symbolize_names: true)
 
         expect(recipes).to be_a(Hash)
         expect(recipes[:data]).to be_a(Array)
-        expect(recipe[:data].count).to eq(2)
+
 
         recipes[:data].each do |recipe|
           expect(recipe).to have_key(:id)
@@ -54,7 +54,31 @@ RSpec.describe "Find Recipes by Country API", type: :request do
     end
 
     describe "sad path" do
+      it "returns an empty array if no recipes are found" do
+        get "/api/v1/recipes?country=asdfasdfasdf"
 
+        expect(response).to be_successful
+        expect(response.status).to eq(200)
+
+        recipes = JSON.parse(response.body, symbolize_names: true)
+
+        expect(recipes).to be_a(Hash)
+        expect(recipes[:data]).to be_a(Array)
+        expect(recipes[:data]).to be_empty
+      end
+
+      it "returns an empty array if the country parameter is an empty string" do
+        get "/api/v1/recipes?country="
+
+        expect(response).to be_successful
+        expect(response.status).to eq(200)
+
+        recipes = JSON.parse(response.body, symbolize_names: true)
+
+        expect(recipes).to be_a(Hash)
+        expect(recipes[:data]).to be_a(Array)
+        expect(recipes[:data]).to be_empty
+      end
     end
   end
 end
