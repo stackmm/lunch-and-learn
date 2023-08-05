@@ -2,8 +2,7 @@ require "rails_helper"
 
 RSpec.describe RecipeService do
   it "establishes a connection and obtains recipes by country", :vcr do
-    recipes = RecipeService.new.get_recipes_by_country("thailand")
-
+    recipes = RecipeService.get_recipes_by_country("thailand")
     expect(recipes).to be_a(Hash)
     expect(recipes[:count]).to eq(191)
     expect(recipes[:hits]).to be_a(Array)
