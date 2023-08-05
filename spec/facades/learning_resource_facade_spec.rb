@@ -8,7 +8,7 @@ RSpec.describe LearningResourceFacade do
     expect(resource.country).to be_a(String)
     expect(resource.video).to be_a(Hash)
     expect(resource.video[:title]).to be_a(String)
-    expect(resource.video[:video_id]).to be_a(String)
+    expect(resource.video[:youtube_video_id]).to be_a(String)
     expect(resource.images).to be_a(Array)
     expect(resource.images[0][:alt_tag]).to be_a(String)
     expect(resource.images[0][:url]).to be_a(String)

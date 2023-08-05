@@ -39,12 +39,22 @@ RSpec.describe "Find Learning Resources by Country API", type: :request do
           expect(image).to have_key(:url)
           expect(image[:url]).to be_a(String)
         end
-
       end
     end
 
     describe "sad path" do
+      it "returns an empty object if no videos or images are found" do
+        get "/api/v1/learning_resources?country=asdfasdfasdf"
 
+        expect(response).to be_successful
+
+        resource = JSON.parse(response.body, symbolize_names: true)
+
+        expect(resource[:data][:id]).to eq(nil)
+        expect(resource[:data][:type]).to eq("learning_resource")
+        expect(resource[:data][:attributes][:country]).to eq("asdfasdfasdf")
+        expect(resource[:data][:attributes][:images]).to eq([])
+      end
     end
   end
 end
