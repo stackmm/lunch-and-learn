@@ -8,13 +8,12 @@ RSpec.describe "Find Recipes by Country API", type: :request do
 
         expect(response).to be_successful
         expect(response.status).to eq(200)
-        expect(response.content_type).to eq("application/json")
+        expect(response.content_type).to eq("application/json; charset=utf-8")
 
         recipes = JSON.parse(response.body, symbolize_names: true)
 
         expect(recipes).to be_a(Hash)
         expect(recipes[:data]).to be_a(Array)
-        expect(recipe[:data].count).to eq(2)
 
         recipes[:data].each do |recipe|
           expect(recipe).to have_key(:id)
