@@ -9,7 +9,7 @@ RSpec.describe UnsplashService do
 
     images.each do |image|
       expect(image[:urls]).to have_key(:raw)
-      expect(image[:urls][:thumb]).to be_a(String)
+      expect(image[:urls][:raw]).to be_a(String)
       expect(image[:alt_description]).to be_a(String)
     end
   end

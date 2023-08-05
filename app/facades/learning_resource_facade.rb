@@ -1,5 +1,5 @@
 class LearningResourceFacade
-  def self.get_learning_resource(country)
+  def self.get_resources(country)
     # return [] if country.nil?
 
     video = YoutubeService.get_video_by_country(country)

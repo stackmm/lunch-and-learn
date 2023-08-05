@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe LearningResourceFacade do
   it "returns a learning resource object for a specific country", :vcr do
-    resource = LearningResourceFacade.get_learning_resource("laos")
+    resource = LearningResourceFacade.get_resources("laos")
 
     expect(resource).to be_a(LearningResource)
     expect(resource.country).to be_a(String)
