@@ -8,9 +8,8 @@ class CountryService
     JSON.parse(response.body, symbolize_names: true)
   end
 
-  def self.get_country(country)
-    get_url("/name/#{country}")
-    # countries = get_url("/all")
-    # countries.sample[:name][:common]
+  def self.get_random_country
+    countries = get_url("all")
+    countries.sample[:name][:common]
   end
 end
