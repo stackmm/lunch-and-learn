@@ -33,7 +33,51 @@ RSpec.describe "User Registration API", type: :request do
     end
 
     describe "sad path" do
+      it "returns an error if any field is missing" do
+        user_params = {
+          email: "mjones@gmail.com",
+          password: "password",
+          password_confirmation: "password"
+        }
 
+        post "/api/v1/users", params: user_params
+
+        expect(response).to_not be_successful
+        expect(response.status).to eq(400)
+        expect(response.body).to eq("{\"error\":\"Name can't be blank\"}")
+      end
+      
+      it "returns an error if email is not unique" do
+        user = User.create!(name: "Bob", email: "mjones@gmail.com", password: "password", password_confirmation: "password")
+
+        user_params = {
+          name: "Mikejones",
+          email: "mjones@gmail.com",
+          password: "password",
+          password_confirmation: "password"
+        }
+
+        post "/api/v1/users", params: user_params
+
+        expect(response).to_not be_successful
+        expect(response.status).to eq(400)
+        expect(response.body).to eq("{\"error\":\"Email has already been taken\"}")
+      end
+
+      it "returns an error if password and password_confirmation do not match" do
+        user_params = {
+          name: "Mikejones",
+          email: "mjones@gmail.com",
+          password: "password",
+          password_confirmation: "notpassword"
+        }
+
+        post "/api/v1/users", params: user_params
+
+        expect(response).to_not be_successful
+        expect(response.status).to eq(400)
+        expect(response.body).to include("Password confirmation doesn't match Password")
+      end
     end
   end
 end

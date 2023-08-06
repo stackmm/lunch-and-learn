@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       resources :users, only: [:create]
       get "/recipes", to: "recipes#index"
       get "/learning_resources", to: "learning_resources#index"
+      post "/sessions", to: "sessions#create"
     end
   end
 end
