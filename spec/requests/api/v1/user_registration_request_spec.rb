@@ -11,7 +11,7 @@ RSpec.describe "User Registration API", type: :request do
           password_confirmation: "password"
         }
 
-        post "/api/v1/users", params: { user: user_params }
+        post "/api/v1/users", params: user_params
 
         expect(response).to be_successful
         expect(response.status).to eq(201)
