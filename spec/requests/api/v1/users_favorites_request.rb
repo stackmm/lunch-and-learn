@@ -33,7 +33,35 @@ RSpec.describe "Find Users Favorites API", type: :request do
     end
 
     describe "sad path" do
+      it "returns an error if the user's API key is invalid" do
+        user = User.create!(name: "Mikejones", email: "mjones@gmail.com", password: "password", password_confirmation: "password")
 
+        user_params = { api_key: "1111"}
+
+        get "/api/v1/favorites", params: user_params
+
+        expect(response).to_not be_successful
+        expect(response.status).to eq(400)
+
+        favorites = JSON.parse(response.body, symbolize_names: true)
+
+        expect(favorites[:error]).to eq("Invalid API Key")
+      end
+
+      it "returns an empty array if the user has no favorites" do
+        user = User.create!(name: "Mikejones", email: "mjones@gmail.com", password: "password", password_confirmation: "password")
+
+        user_params = { api_key: user.api_key }
+
+        get "/api/v1/favorites", params: user_params
+
+        expect(response).to be_successful
+        expect(response.status).to eq(200)
+
+        favorites = JSON.parse(response.body, symbolize_names: true)
+
+        expect(favorites[:data]).to eq([])
+      end
     end
   end
 end
