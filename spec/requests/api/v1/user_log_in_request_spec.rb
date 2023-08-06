@@ -16,23 +16,33 @@ RSpec.describe "User Log In API", type: :request do
         expect(response).to be_successful
         expect(response.status).to eq(200)
 
-        # expect(response.body).to eq("{\"data\":{\"id\":\"#{user.id}\",\"type\":\"user\",\"attributes\":{\"name\":\"Bob\",\"email\":\"}")
-        expect(response.body).to include(user.name)
-        expect(response.body).to include(user.email)
-        expect(response.body).to include(user.api_key)
+        user_response = JSON.parse(response.body, symbolize_names: true)
+
+        expect(user_response[:data][:id]).to eq(user.id.to_s)
+        expect(user_response[:data][:type]).to eq("user")
+        expect(user_response[:data][:attributes][:name]).to eq(user.name)
+        expect(user_response[:data][:attributes][:email]).to eq(user.email)
+        expect(user_response[:data][:attributes][:api_key]).to eq(user.api_key)
       end
     end
 
     describe "sad path" do
-      xit "returns an error if any field is missing" do
+      it "returns an error if any field is missing" do
         user = User.create!(name: "Bob", email: "mjones@gmail.com", password: "password", password_confirmation: "password")
 
         user_params = { email: "mjones@gmail.com" }
 
         post "/api/v1/sessions", params: user_params
+
+        expect(response).to_not be_successful
+        expect(response.status).to eq(400)
+
+        user_response = JSON.parse(response.body, symbolize_names: true)
+
+        expect(user_response[:error]).to eq("Invalid credentials")
       end
 
-      xit "returns an error if credentials are invalid" do
+      it "returns an error if credentials are invalid" do
         user = User.create!(name: "Bob", email: "mjones@gmail.com", password: "password", password_confirmation: "password")
 
         user_params = {
@@ -41,6 +51,13 @@ RSpec.describe "User Log In API", type: :request do
         }
 
         post "/api/v1/sessions", params: user_params
+
+        expect(response).to_not be_successful
+        expect(response.status).to eq(400)
+
+        user_response = JSON.parse(response.body, symbolize_names: true)
+
+        expect(user_response[:error]).to eq("Invalid credentials")
       end
     end
   end
