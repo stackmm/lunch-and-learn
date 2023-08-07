@@ -10,6 +10,11 @@ class CountryService
 
   def self.get_random_country
     countries = get_url("all")
-    countries.sample[:name][:common]
+    countries.sample
+  end
+
+  def self.get_country_by_name(country)
+    country = get_url("name/#{country}")
+    country.first
   end
 end
