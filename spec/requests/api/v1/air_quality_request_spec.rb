@@ -27,16 +27,6 @@ RSpec.describe "Find Air Quality API", type: :request do
         expect(air_quality[:data][:attributes]).to have_key(:co_concentration)
         expect(air_quality[:data][:attributes][:co_concentration]).to be_a(Float)
       end
-
-      it "can find air quality for a random city if no country provided" do
-        # get "/api/v1/air_quality"
-
-        # expect(response).to be_successful
-        # expect(response.status).to eq(200)
-
-        # air_quality = JSON.parse(response.body, symbolize_names: true)
-        # require 'pry'; binding.pry
-      end
     end
   end
 end
