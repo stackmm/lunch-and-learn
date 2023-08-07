@@ -14,6 +14,7 @@ RSpec.describe AirQuality do
   end
 
   it "has attributes" do
+    expect(@air_quality.id).to eq(nil)
     expect(@air_quality.city).to eq("Abuja")
     expect(@air_quality.aqi).to eq(27)
     expect(@air_quality.pm25_concentration).to eq(8.45)

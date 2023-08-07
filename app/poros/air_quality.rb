@@ -1,7 +1,8 @@
 class AirQuality
-  attr_reader :city, :aqi, :pm25_concentration, :co_concentration
+  attr_reader :id, :city, :aqi, :pm25_concentration, :co_concentration
 
   def initialize(city, data)
+    @id = nil
     @city = city
     @aqi = data[:overall_aqi]
     @pm25_concentration = data[:"PM2.5"][:concentration]
