@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Country do
   before(:each) do
-    @country = Country.new("Thailand")
+    @country = Country.new("Thailand", "Bangkok")
   end
 
   it "exists" do
@@ -11,5 +11,6 @@ RSpec.describe Country do
 
   it "has attributes" do
     expect(@country.name).to eq("Thailand")
+    expect(@country.capital).to eq("Bangkok")
   end
 end
