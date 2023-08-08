@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Add Favorites API", type: :request do
+RSpec.describe "Create Favorites API", type: :request do
   describe "POST /api/v1/favorites" do
     describe "happy path" do
       it "can add a favorite for a user when given valid parameters" do

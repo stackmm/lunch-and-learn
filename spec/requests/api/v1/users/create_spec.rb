@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "User Registration API", type: :request do
+RSpec.describe "Create User API", type: :request do
   describe "POST /api/v1/users" do
     describe "happy path" do
       it "can create a new user when given valid parameters" do
