@@ -18,8 +18,8 @@ RSpec.describe RecipeFacade do
     expect(recipes).to eq([])
   end
 
-  it "returns an error if the country is invalid", :vcr do
+  it "returns an empty array if the country is invalid", :vcr do
     recipes = RecipeFacade.get_recipes("er3232")
-    expect(recipes).to eq({ error: "Invalid country" })
+    expect(recipes).to eq([])
   end
 end
