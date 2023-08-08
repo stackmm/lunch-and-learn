@@ -6,4 +6,9 @@ RSpec.describe CountryService do
 
     expect(country).to be_a(String)
   end
+
+  it "can check if a country is valid", :vcr do
+    expect(CountryService.valid_country?("Italy")).to eq(true)
+    expect(CountryService.valid_country?("er3232")).to eq(false)
+  end
 end
