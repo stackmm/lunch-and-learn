@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe RecipeFacade do
   it "returns an array of recipe objects for a specific country", :vcr do
-    recipes = RecipeFacade.get_recipes("thailand")
+    recipes = RecipeFacade.get_recipes("Thailand")
 
     expect(recipes).to be_an(Array)
     expect(recipes.first).to be_a(Recipe)
@@ -13,8 +13,13 @@ RSpec.describe RecipeFacade do
     expect(recipes).to eq([])
   end
 
-  it "returns an empty array if no recipes are found", :vcr do
-    recipes = RecipeFacade.get_recipes("asdfasdfasdf")
+  it "returns an empty array if no recipes are found for an existing country", :vcr do
+    recipes = RecipeFacade.get_recipes("Tuvalu")
     expect(recipes).to eq([])
+  end
+
+  it "returns an error if the country is invalid", :vcr do
+    recipes = RecipeFacade.get_recipes("er3232")
+    expect(recipes).to eq({ error: "Invalid country" })
   end
 end
