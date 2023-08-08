@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Add Favorites API", type: :request do
+RSpec.describe "Create Favorites API", type: :request do
   describe "POST /api/v1/favorites" do
     describe "happy path" do
       it "can add a favorite for a user when given valid parameters" do
@@ -13,7 +13,7 @@ RSpec.describe "Add Favorites API", type: :request do
           recipe_title: "Andy Ricker's Naam Cheuam Naam Taan Piip (Palm Sugar Simple Syrup)"
         }
 
-        post "/api/v1/favorites", params: favorite_params
+        post "/api/v1/favorites", params: JSON.generate(favorite_params), headers: { "CONTENT_TYPE" => "application/json" }
 
         expect(response).to be_successful
         expect(response.status).to eq(201)
@@ -36,7 +36,7 @@ RSpec.describe "Add Favorites API", type: :request do
           recipe_title: "Andy Ricker's Naam Cheuam Naam Taan Piip (Palm Sugar Simple Syrup)"
         }
 
-        post "/api/v1/favorites", params: favorite_params
+        post "/api/v1/favorites", params: JSON.generate(favorite_params), headers: { "CONTENT_TYPE" => "application/json" }
 
         expect(response).to_not be_successful
         expect(response.status).to eq(400)

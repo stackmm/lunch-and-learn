@@ -11,7 +11,7 @@ RSpec.describe "User Log In API", type: :request do
           password: "password"
         }
 
-        post "/api/v1/sessions", params: user_params
+        post "/api/v1/sessions", params: JSON.generate(user_params), headers: { "CONTENT_TYPE" => "application/json" }
 
         expect(response).to be_successful
         expect(response.status).to eq(200)
@@ -32,7 +32,7 @@ RSpec.describe "User Log In API", type: :request do
 
         user_params = { email: "mjones@gmail.com" }
 
-        post "/api/v1/sessions", params: user_params
+        post "/api/v1/sessions", params: JSON.generate(user_params), headers: { "CONTENT_TYPE" => "application/json" }
 
         expect(response).to_not be_successful
         expect(response.status).to eq(400)
@@ -50,7 +50,7 @@ RSpec.describe "User Log In API", type: :request do
           password: "notpassword"
         }
 
-        post "/api/v1/sessions", params: user_params
+        post "/api/v1/sessions", params: JSON.generate(user_params), headers: { "CONTENT_TYPE" => "application/json" }
 
         expect(response).to_not be_successful
         expect(response.status).to eq(400)

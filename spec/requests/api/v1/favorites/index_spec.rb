@@ -35,6 +35,7 @@ RSpec.describe "Find Users Favorites API", type: :request do
     describe "sad path" do
       it "returns an error if the user's API key is invalid" do
         user = User.create!(name: "Mikejones", email: "mjones@gmail.com", password: "password", password_confirmation: "password")
+        favorite = user.favorites.create!(country: "thailand", recipe_link: "https://www.seriouseats.com/recipes/2013/11/andy-rickers-naam-cheuam-naam-taan-piip-palm-sugar-simple-syrup.html", recipe_title: "Andy Ricker's Naam Cheuam Naam Taan Piip (Palm Sugar Simple Syrup)")
 
         user_params = { api_key: "1111"}
 
