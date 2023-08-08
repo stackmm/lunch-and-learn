@@ -80,12 +80,18 @@ RSpec.describe "Find Recipes by Country API", type: :request do
         expect(recipes[:data]).to be_empty
       end
 
-      # it "returns an error if the country parameter is not valid" do
-      #   get "/api/v1/recipes?country=applebees"
+      it "returns an empty array if the country parameter is not valid" do
+        get "/api/v1/recipes?country=applebees"
 
-      #   expect(response).to_not be_successful
-      #   expect(response.status).to eq(400)
-      # end
+        expect(response).to be_successful
+        expect(response.status).to eq(200)
+
+        recipes = JSON.parse(response.body, symbolize_names: true)
+        
+        expect(recipes).to be_a(Hash)
+        expect(recipes[:data]).to be_a(Array)
+        expect(recipes[:data]).to be_empty
+      end
     end
   end
 end
