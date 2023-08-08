@@ -11,7 +11,7 @@ RSpec.describe "User Registration API", type: :request do
           password_confirmation: "password"
         }
 
-        post "/api/v1/users", params: user_params
+        post "/api/v1/users", params: JSON.generate(user_params), headers: { "CONTENT_TYPE" => "application/json" }
 
         expect(response).to be_successful
         expect(response.status).to eq(201)
@@ -40,13 +40,13 @@ RSpec.describe "User Registration API", type: :request do
           password_confirmation: "password"
         }
 
-        post "/api/v1/users", params: user_params
+        post "/api/v1/users", params: JSON.generate(user_params), headers: { "CONTENT_TYPE" => "application/json" }
 
         expect(response).to_not be_successful
         expect(response.status).to eq(400)
         expect(response.body).to eq("{\"error\":\"Name can't be blank\"}")
       end
-      
+
       it "returns an error if email is not unique" do
         user = User.create!(name: "Bob", email: "mjones@gmail.com", password: "password", password_confirmation: "password")
 
@@ -57,7 +57,7 @@ RSpec.describe "User Registration API", type: :request do
           password_confirmation: "password"
         }
 
-        post "/api/v1/users", params: user_params
+        post "/api/v1/users", params: JSON.generate(user_params), headers: { "CONTENT_TYPE" => "application/json" }
 
         expect(response).to_not be_successful
         expect(response.status).to eq(400)
@@ -72,7 +72,7 @@ RSpec.describe "User Registration API", type: :request do
           password_confirmation: "notpassword"
         }
 
-        post "/api/v1/users", params: user_params
+        post "/api/v1/users", params: JSON.generate(user_params), headers: { "CONTENT_TYPE" => "application/json" }
 
         expect(response).to_not be_successful
         expect(response.status).to eq(400)
