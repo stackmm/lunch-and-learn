@@ -14,7 +14,8 @@ class CountryService
   end
 
   def self.valid_country?(country)
-    all_countries.include?(country)
+    capitalize_country = country.capitalize
+    all_countries.include?(capitalize_country)
   end
 
   private
